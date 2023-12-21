@@ -87,7 +87,13 @@ export default function Plans(){
 
 
   }, [])
+  const {
+    setSelectedBuffet
+  } = useContext(UserContext);
 
+  useEffect(()=>{
+    setSelectedBuffet([])
+  }, [])
    
   
     return(

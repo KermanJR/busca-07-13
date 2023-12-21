@@ -9,7 +9,7 @@ import { useTheme } from "@src/app/theme/ThemeProvider";
 import { BiMap } from "react-icons/bi";
 import Icon from "@src/app/theme/components/Icon/Icon";
 import useResponsive from "@src/app/theme/helpers/useResponsive";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@src/app/context/UserContext";
 import {useRouter } from 'next/router';
 import Pagination from "@src/app/components/system/Pagination";
@@ -44,6 +44,14 @@ export function ResultSection() {
   function capitalizeFirstLetter(word) {
     return word?.charAt(0).toUpperCase() + word?.slice(1);
   }
+
+  const {
+    setSelectedBuffet
+  } = useContext(UserContext);
+
+  useEffect(()=>{
+    setSelectedBuffet([])
+  }, [])
 
 
   return (

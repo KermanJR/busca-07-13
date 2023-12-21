@@ -35,6 +35,14 @@ export default function Contact(){
       openRecoveryPassword
     } = useContext(ModalContext)
 
+    const {
+      setSelectedBuffet
+    } = useContext(UserContext);
+
+    useEffect(()=>{
+      setSelectedBuffet([])
+    }, [])
+
 
   
     return(

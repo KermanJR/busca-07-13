@@ -67,10 +67,20 @@ export default function LoginBuffet() {
     openRecoveryPassword
   } = useContext(ModalContext)
 
+  const {
+    setSelectedBuffet
+  } = useContext(UserContext);
 
+  useEffect(()=>{
+    setSelectedBuffet([])
+  }, [])
+  
   const {
     setModalOpen
   } = useContext(ModalContext)
+
+ 
+
 
   const handleSubmit = (e) => {
     setLoading(true)

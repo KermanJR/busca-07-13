@@ -7,12 +7,10 @@ import ImageBanner from '../../../../../../../../public/assets/images/banner_sin
 import { useContext } from "react";
 import { UserContext } from "@src/app/context/UserContext";
 import { useRouter } from "next/router";
-import { Data } from "@react-google-maps/api";
 
 export default function Banner({data}){
 
-   
-    console.log(data)
+
 
     const theme = useTheme();
     const imagens = data?.galerias;
@@ -21,13 +19,14 @@ export default function Banner({data}){
     const {
         idBuffet,
         setIdBuffet,
-        setDataBuffet
+        selectedBuffet,
+        setSelectedBuffet,
     } = useContext(UserContext);
 
     const handleSubmit = (e, idEntidade)=>{
         e.preventDefault();
         setIdBuffet(idEntidade)
-        setDataBuffet(data)
+        setSelectedBuffet(data)
         router.push('/orcamento-por-regiao')
 
     }

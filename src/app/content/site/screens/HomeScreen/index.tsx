@@ -42,7 +42,9 @@ export default function HomeScreen(){
     
   } = useContext(ModalContext)
 
-
+  const {
+    setSelectedBuffet
+  } = useContext(UserContext);
 
   const router = useRouter();
 
@@ -63,6 +65,11 @@ export default function HomeScreen(){
   }, [router.asPath]);
 
 
+
+
+  useEffect(()=>{
+    setSelectedBuffet([])
+  }, [])
 
   return(
     <Box

@@ -42,6 +42,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [idBuffet, setIdBuffet] = useState<number>(null);
     const [idEvent, setIdEvent] = useState<number>(null);
     const [buffetsRelacionados, setBuffetsRelacionados] = useState<[]>([])
+    const [selectedBuffet, setSelectedBuffet] = useState<[]>([])
 
     const [errorLogin, setErrorLogin] = useState('');
     const [successLogin, setSuccessLogin] = useState('');
@@ -136,6 +137,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             errorLogin,
             successLogin,
             buffetsRelacionados,
+            selectedBuffet,
+            setSelectedBuffet,
             setBuffetsRelacionados,
             setErrorLogin,
             setSuccessLogin,

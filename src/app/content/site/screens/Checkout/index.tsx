@@ -78,6 +78,7 @@ export default function Checkout(){
 
     const [dataAssinatura, setDataAssinatura] = useState([]);
 
+  
 
  
 
@@ -94,8 +95,14 @@ export default function Checkout(){
       selectedPlan,
       dataUser,
       setDataBuffet,
-      
+      setSelectedBuffet
     } = useContext(UserContext);
+
+    useEffect(()=>{
+      setSelectedBuffet([])
+    }, [])
+
+ 
 
 
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);

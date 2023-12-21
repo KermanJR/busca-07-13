@@ -33,7 +33,7 @@ import { FaCheck } from "react-icons/fa";
 export default function SinglePageBuffet(slug){
   const {
     idBuffet,
-    dataBuffet,
+    setSelectedBuffet,
     buffetsRelacionados
   } = useContext(UserContext)
   
@@ -70,6 +70,8 @@ export default function SinglePageBuffet(slug){
       isModalOpenBudget
     } = useContext(ModalContext)
 
+   
+   
     function formatarTelefone(telefone) {
       // Remove todos os caracteres não numéricos
       const numeroLimpo = telefone?.replace(/\D/g, '');
@@ -100,8 +102,9 @@ export default function SinglePageBuffet(slug){
     useEffect(() => {
       BuffetService.showBuffetById(idBuffet ? idBuffet : JSON.parse(localStorage.getItem('ID_BUFFET')))
         .then((response) => {
-  
+   
           setDetails(response)
+          setSelectedBuffet(response)
           const attractionPromises = response?.detalhes
             .filter((item) => item.id_atracao !== null)
             .map((item) => BuffetService.getAttractionsBuffetsById(item?.id_atracao));
@@ -185,7 +188,10 @@ export default function SinglePageBuffet(slug){
 
     const videoId = extractVideoId(details?.['youtube']);
 
-    
+  
+    useEffect(()=>{
+      setSelectedBuffet([])
+    }, [])
 
 
 

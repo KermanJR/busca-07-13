@@ -25,6 +25,7 @@ export interface UserState {
   idEvent: number;
   slugBuffet: string;
   dataBuffet: [];
+  selectedBuffet: [];
   selectedServicesAndAttractives: [];
   idBuffet: number;
 }
@@ -54,6 +55,7 @@ export interface UserSetters {
   setIdEvent: React.Dispatch<React.SetStateAction<number>>;
   setIdBuffet: React.Dispatch<React.SetStateAction<number>>;
   setSelectedAttractives: React.Dispatch<React.SetStateAction<[]>>;
+  setSelectedBuffet: React.Dispatch<React.SetStateAction<[]>>;
   setDataBuffet: React.Dispatch<React.SetStateAction<[]>>;
   setBuffetsRelacionados: React.Dispatch<React.SetStateAction<[]>>;
   setSelectedServices: React.Dispatch<React.SetStateAction<[]>>;

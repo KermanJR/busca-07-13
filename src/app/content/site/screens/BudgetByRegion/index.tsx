@@ -47,7 +47,9 @@ export default function BudgetByRegion(){
     setDataBuffet,
     dataUser,
     setDataUser,
-    idBuffet
+    idBuffet,
+    selectedBuffet,
+    setSelectedBuffet
   } = useContext(UserContext)
 
      //Dados de configurações
@@ -60,7 +62,8 @@ export default function BudgetByRegion(){
      const [error, setError] = useState('');
 
       const [isLoading, setIsLoading] = useState(false);
-  
+
+    
 
     //Dados de endereços
     const [cities, setCities] = useState([]);
@@ -292,7 +295,6 @@ export default function BudgetByRegion(){
     useEffect(() => {
       BuffetService.showBuffets()
         .then(res => {
-         
           if(idCidade){
             res.map((item, index)=>{
               if(item?.entidade?.enderecos[0]?.endereco?.cidade?.id == idCidade){
@@ -314,8 +316,11 @@ export default function BudgetByRegion(){
       
         });
     }, [idCidade]);
+
+
     
 
+    console.log(idBuffet)
 
    
 
@@ -358,7 +363,7 @@ export default function BudgetByRegion(){
             "status": String(dataUser?.['entidade']?.id),
             "id_entidade": idBuffet,
             "periodo": periodo,
-            "id_cidade": dataBuffet?.['entidade']?.enderecos[0]?.endereco?.cidade?.id,
+            "id_cidade": selectedBuffet?.['entidade']?.enderecos[0]?.endereco?.cidade?.id,
             "bairro": bairro,
             "data_do_evento": `${dataDoEvento} 00:00:00`
           }
@@ -457,6 +462,8 @@ export default function BudgetByRegion(){
   
     ]
 
+   
+
     useEffect(()=>{
       if(typeof window != undefined){
         BuffetService.showBuffetById(Number(window?.localStorage?.getItem('ID_BUFFET')))
@@ -469,14 +476,15 @@ export default function BudgetByRegion(){
       }
     }, [])
 
-
-    
+    function isObjectEmpty(obj) {
+      return Object.keys(obj).length === 0;
+    }
+ 
 
   
     return(
 
-      dataBuffet?.length > 1?
-
+      isObjectEmpty(selectedBuffet)?
         <Box tag="main"
           styleSheet={{
           alignItems: 'center',
@@ -713,7 +721,12 @@ export default function BudgetByRegion(){
           boxShadow: `2px 2px 10px 2px ${theme.colors.neutral.x050}`
         }}>
           <Text variant="heading4Bold" styleSheet={{textAlign: 'left'}} color={theme.colors.primary.x500}>
-           Evento - {dataBuffet?.['entidade']?.nome}
+           Evento
+      
+          </Text>
+          <Text variant="heading5Bold" styleSheet={{textAlign: 'left', fontSize: '1rem'}} color={theme.colors.neutral.x999}>
+          
+           {dataBuffet?.['entidade']?.nome}
           </Text>
           <Box tag="form" styleSheet={{marginTop: '.5rem'}}  onSubmit={handleSubmit}>
             <Box styleSheet={{
@@ -804,7 +817,7 @@ export default function BudgetByRegion(){
             }}
             startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
           >
-      {isLoading ? <Text color={theme.colors.neutral.x000}>Enviando...</Text> : <Text  color={theme.colors.neutral.x000}>Enviar para todos os buffets da região</Text>}
+      {isLoading ? <Text color={theme.colors.neutral.x000}>Enviando...</Text> : <Text  color={theme.colors.neutral.x000}>Enviar orçamento</Text>}
     </BtnMaterial>
           
           {error ? <Text styleSheet={{color:' red', textAlign: 'center', marginTop: '1rem', fontSize: '.875rem'}}>{error}</Text>: ''}

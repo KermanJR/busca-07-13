@@ -183,7 +183,13 @@ export default function NewBuffet() {
     return formattedCNPJ.replace(/\D/g, '');
   };
 
+  const {
+    setSelectedBuffet
+  } = useContext(UserContext);
 
+  useEffect(()=>{
+    setSelectedBuffet([])
+  }, [])
 
   return (
     <Box styleSheet={{ 
