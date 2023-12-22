@@ -55,8 +55,9 @@ const FormSearch = ({buttonLabel}) => {
         value={query}
         onChange={setQuery}
         styleSheet={{ 
+          width: '100%',
           flex: '1',
-          marginRight: '1rem',
+          marginRight: !(size < 400) ? '1rem' : '0rem',
           marginBottom: !(size < 400) ? '' : '1rem',
           border: 'none',
           borderRadius: '1.25rem',
@@ -76,7 +77,7 @@ const FormSearch = ({buttonLabel}) => {
           justifyContent: 'center',
           backgroundColor: theme.colors.primary.x500,
           color: theme.colors.neutral.x000,
-          width: !isMobile ? '11.0995rem' : 'auto',
+          width: !isMobile ? '11.0995rem' : '100%',
           padding: '0.5rem 1rem',
           borderRadius: '1.25rem',
           cursor: 'pointer'

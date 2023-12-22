@@ -251,13 +251,14 @@ export default function SinglePageBuffet(slug){
                         flexDirection: 'row',  
                         flexWrap: 'wrap',                
                         gap: '1rem',                  
-                        marginTop: '3rem'                 
+                        marginTop: '3rem',
+                                         
                       }}                  
                     >                 
                       {attractions?.map((nome, index)=>{
                           return(
                               <Box styleSheet={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', padding: '1rem 0'}}>
-                               <Image src={IconCheckTemplate.src} alt=""/>
+                               <Image src={IconCheckTemplate.src} alt="icone-comodidades" styleSheet={{width: '20px'}}/>
                                 <Text styleSheet={{wordWrap: 'break-word'}} variant="btnRegular">{nome}</Text>
                               </Box>
                           )
@@ -288,7 +289,7 @@ export default function SinglePageBuffet(slug){
                       {services?.map((nome, index)=>{
                           return(
                               <Box styleSheet={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', padding: '1rem 0'}}>
-                                <Image src={IconCheckTemplate.src} alt=""/>
+                                <Image src={IconCheckTemplate.src} alt="icone-servicos" styleSheet={{width: '20px'}}/>
                                 <Text styleSheet={{wordWrap: 'break-word'}} variant="btnRegular">{nome}</Text>
                               </Box>
                           )
@@ -319,7 +320,7 @@ export default function SinglePageBuffet(slug){
                       {securities?.map((nome, index)=>{
                           return(
                               <Box styleSheet={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', padding: '1rem 0'}}>
-                                <Image src={IconCheckTemplate.src} alt=""/>
+                                <Image src={IconCheckTemplate.src} alt="icone-seguranca" styleSheet={{width: '20px'}}/>
                                 <Text styleSheet={{wordWrap: 'break-word'}} variant="btnRegular">{nome}</Text>
                               </Box>
                           )
@@ -542,7 +543,7 @@ export default function SinglePageBuffet(slug){
                         </Text>
                     
                       <Box tag="div" className="video" styleSheet={{height: '350px', marginTop: '1rem', borderRadius: '12px'}}>
-                      <iframe width="640" height="360" src={`https://www.youtube.com/embed/${videoId}`}  allowFullScreen></iframe>
+                      <iframe width={(size < 400)? '100%': '640'} height="360" src={`https://www.youtube.com/embed/${videoId}`}  allowFullScreen></iframe>
 
                       </Box>
                     </Box>: ''

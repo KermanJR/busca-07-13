@@ -3,7 +3,7 @@ import theme from "@src/app/theme/theme";
 import React, { useState } from "react";
 import arrowDown from "../../../../../../../../public/assets/icons/arrow_down.jpg"
 import Text from "@src/app/theme/components/Text/Text";
-export default function CategoryFilter({ categories1, categories2, selectedCategories, onCategoryChange }) {
+export default function CategoryFilter({ categories1, selectedCategories, onCategoryChange }) {
   const [showSubModal, setShowSubModal] = useState(false);
 
   const toggleSubModal = () => {
@@ -46,22 +46,7 @@ export default function CategoryFilter({ categories1, categories2, selectedCateg
               </li>
             ))}
           </ul>
-          <Text>Eventos Corporativos</Text>
-          <ul>
-            {categories2.map((category) => (
-              <li key={category.value}>
-                <label>
-                  <input
-                    type="checkbox"
-                    value={category.label}
-                    checked={selectedCategories.includes(category.label)}
-                    onChange={(e) => onCategoryChange(e.target.value)}
-                  />
-                   <Text styleSheet={{display: 'inline-block', fontSize: '.8rem', fontWeight: '500'}}>{category.label}</Text>
-                </label>
-              </li>
-            ))}
-          </ul>
+         
         </div>
       )}
       <style jsx>{`

@@ -153,7 +153,7 @@ export default function LoginBuffet() {
  
       }}>
         
-        <ul>
+        <ul >
           <li style={{display: 'flex', width: 'auto', alignItems: 'center'}}>
             <BsCheck style={{display: 'inline-block', width: !(size < 350) ? '50px' : '30px', fill: theme.colors.secondary.x500}}/>
             <p style={{width: 'auto', fontWeight: !(size < 1230) ? 'bold' : '500', color: '#fff', fontSize: !(size < 350) ? '1.2rem' : '0.6rem'}}>Sua empresa em evidência.</p>
@@ -290,7 +290,7 @@ export default function LoginBuffet() {
         alignItems: 'center',
         gap: '5rem',
         padding: '5rem 10px',
-        height: '350px'
+        height: 'auto'
       }}>
         <Box styleSheet={{width: '20%', minWidth: '180px', maxWidth: '350px'}}>
           <Image src={IconLoginBuffet1.src} alt="Icon" styleSheet={{width: '40%', margin: '0 auto', objectFit: 'contain'}}/>

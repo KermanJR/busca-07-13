@@ -162,10 +162,14 @@ export default function ModalBudget({ isOpen, onClose }) {
     >
       <Box
         styleSheet={{
-          width: '570px',
-          padding: '2rem',
+          width: !(size <= 500)? '570px': '100%',
+          padding: !(size <= 500)? '2rem': '.5rem',
+          paddingTop: !(size <= 500)? '2rem': '2rem',
+          paddingBottom: !(size <= 500)? '2rem': '2rem',
+          paddingLeft: !(size <= 500)? '2rem': '.5',
           backgroundColor: theme.colors.neutral.x050,
-          borderRadius: '1rem'
+          borderRadius: '1rem',
+         
         }}
       >
         <Button
@@ -184,15 +188,16 @@ export default function ModalBudget({ isOpen, onClose }) {
             position: 'relative',
             alignSelf: 'end',
             marginTop: '-1rem',
-            marginRight: '-1rem',
-            boxShadow: '0.5px 1px 3px 1px #969BA0'
+            marginRight: '1rem',
+            boxShadow: '0.5px 1px 3px 1px #969BA0',
+            
           }}
         >
           X
       </Button>
       
       
-        <Box tag="form" styleSheet={{display: 'flex', flexDirection: 'column', gap: '1rem'}} onSubmit={handleSubmit}>
+        <Box tag="form" styleSheet={{display: 'flex', flexDirection: 'column', gap: '1rem', width:'100%'}} onSubmit={handleSubmit}>
           <Box styleSheet={{textAlign: 'center', display: 'flex', flexDirection: 'column', alignSelf: 'center', padding: '0', width: '100%'}}>
             <Text  variant="heading4" styleSheet={{fontWeight: 'bold'}}>Quer solicitar orçamentos?</Text>
           </Box>

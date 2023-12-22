@@ -15,7 +15,7 @@ import BuffetService from "@src/app/api/BuffetService";
 import ModalRecoveryPassword from "../HomeScreen/Components/Modals/RecoveryPassword";
 import WhatsAppButton from "../HomeScreen/Components/WhatsappButton";
 import { UserContext } from "@src/app/context/UserContext";
-
+import BannerAnotherPages from '../../../../../../public/assets/images/banner_another_pages.webp';
 export default function AdvertiseWithUsScreen(){
 
   const theme = useTheme();
@@ -67,9 +67,10 @@ export default function AdvertiseWithUsScreen(){
         textAlign: 'center',
         justifyContent: 'center',
         alignContent: 'center',
-        background: theme.colors.primary.x500, // Cor do fundo alterada para azul
         padding: `${isMobile ? (!(size < 350) ? '5rem' : '3rem'): '6rem'}`,
-        marginTop: '5rem'
+        marginTop: `${isMobile ? (!(size < 350) ? '4rem' : '3rem'): '5rem'}`,
+        background: `url(${BannerAnotherPages.src})`,
+       
       }}>
         <Text 
           tag="h1" 
@@ -79,7 +80,15 @@ export default function AdvertiseWithUsScreen(){
         </Text>
       </Box>
 
-      <Box styleSheet={{display: 'grid', gridTemplateColumns: !(size < 650) ? '1fr 4fr' : '1fr', gap: !(size < 950) ? '' : '5vw', width: '100%', padding: !(size < 950) ? '0 6rem' : (!(size <= 650) ? '20px' : '0px 5px')}}>
+      <Box 
+        styleSheet={{
+          display: 'grid', 
+          gridTemplateColumns: !(size < 650) ? '1fr 4fr' : '1fr', 
+          gap: !(size < 950) ? '' : '5vw', 
+          width: '100%', 
+          padding: !(size < 950) ? '0 6rem' : (!(size <= 650) ? '20px' : '0px 5px')
+        }}
+      >
       {/* Filtros - Seção Esquerda */}
       <FilterSection/>
 

@@ -120,7 +120,7 @@ const ListBudgets = () =>{
           <TableBody>
             {orcamentos?.slice((currentPage - 1) * elementsPerPage, currentPage * elementsPerPage)
           ?.map((item, index)=>(
-              <TableRow key={index} styleSheet={{display: 'flex', flexDirection: 'row'}}>
+              <TableRow >
                 <TableCell>{item?.['id']}</TableCell>
                 <TableCell>{item?.['evento']?.['nome']}</TableCell>
                 <TableCell>{(item?.['valor']).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</TableCell>

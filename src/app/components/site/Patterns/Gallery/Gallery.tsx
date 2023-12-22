@@ -1,17 +1,33 @@
 import Box from '@src/app/theme/components/Box/Box';
+import Button from '@src/app/theme/components/Button/Button';
 import Image from '@src/app/theme/components/Image/Image';
 import React, { useState } from 'react';
 
 export const Gallery = ({ dataBuffet, isMobile }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  const openImageModal = (image) => {
-    setSelectedImage(image);
+  const openImageModal = (index) => {
+    setSelectedImageIndex(index);
   };
 
   const closeImageModal = () => {
-    setSelectedImage(null);
+    setSelectedImageIndex(null);
   };
+
+  const navigate = (direction) => {
+    if (selectedImageIndex !== null) {
+      const galleryImages = dataBuffet?.galerias
+        ?.filter((image) => image?.arquivo?.tipo === 'galeria');
+
+      const newIndex =
+        (selectedImageIndex + direction + galleryImages.length) %
+        galleryImages.length;
+      setSelectedImageIndex(newIndex);
+    }
+  };
+
+  const galleryImages = dataBuffet?.galerias
+    ?.filter((image) => image?.arquivo?.tipo === 'galeria');
 
   return (
     <Box>
@@ -30,15 +46,14 @@ export const Gallery = ({ dataBuffet, isMobile }) => {
           marginTop: '1rem',
         }}
       >
-        {dataBuffet?.galerias?.slice(2).map((image, index) => (
-          image?.arquivo?.tipo === "galeria" && (
+        {galleryImages?.map((image, index) => (
           <Box
             key={index}
             styleSheet={{
               width: isMobile ? '100%' : '20%',
               cursor: 'pointer',
             }}
-            onClick={() => openImageModal(image)}
+            onClick={() => openImageModal(index)}
           >
             <Image
               src={`https://buscabuffet.com.br/api/uploads/${image?.arquivo?.nome}`}
@@ -50,12 +65,10 @@ export const Gallery = ({ dataBuffet, isMobile }) => {
               }}
             />
           </Box>
-          )
-          
         ))}
       </Box>
 
-      {selectedImage && (
+      {selectedImageIndex !== null && (
         <Box
           styleSheet={{
             position: 'fixed',
@@ -69,10 +82,51 @@ export const Gallery = ({ dataBuffet, isMobile }) => {
             justifyContent: 'center',
             zIndex: 9999,
           }}
-          onClick={closeImageModal}
         >
+          <Button
+            styleSheet={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              cursor: 'pointer',
+              color: '#fff',
+              fontSize: '16px',
+            }}
+            onClick={closeImageModal}
+          >
+            X
+          </Button>
+          <Button
+            styleSheet={{
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              left: '20px',
+              cursor: 'pointer',
+              fontSize: '16px',
+            }}
+            onClick={() => navigate(-1)}
+            colorVariant='secondary'
+          >
+            &lt;
+          </Button>
+          <Button
+            styleSheet={{
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              right: '20px',
+              cursor: 'pointer',
+              color: '#fff',
+              fontSize: '16px',
+            }}
+            colorVariant='secondary'
+            onClick={() => navigate(1)}
+          >
+            &gt;
+          </Button>
           <Image
-            src={`https://buscabuffet.com.br/api/uploads/${selectedImage?.arquivo?.nome}`}
+            src={`https://buscabuffet.com.br/api/uploads/${galleryImages[selectedImageIndex]?.arquivo?.nome}`}
             alt="image"
             styleSheet={{
               maxWidth: '90%',

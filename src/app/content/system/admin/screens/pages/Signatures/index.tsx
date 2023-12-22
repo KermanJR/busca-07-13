@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import BuffetService from "@src/app/api/BuffetService";
 import { FilterArrows } from "../common/FilterArrows";
 import { useFilterFunctions } from "../common/useFilterFunctions";
+import PagBankService from "@src/app/api/PagBankService";
 
 const Signatures = () =>{
 
@@ -22,6 +23,8 @@ const Signatures = () =>{
   const [viewElements, setViewElements] = useState(0)
   const [currentPage, setCurrentPage] = useState(1);
   const elementsPerPage = 5; // Define o número de elementos por página
+  const [assinaturasPagBank, setAssinaturasPagBank] = useState([]);
+  const [viewPayments, setViewPayments] = useState<any>([])
   const {
     orderByGrowing,
     orderByDescending,
@@ -31,9 +34,16 @@ const Signatures = () =>{
     orderByStringDescending
     } = useFilterFunctions({hook: signatures, setHook: setSignatures})
 
+    useEffect(() => {
+      if (typeof window != 'undefined') {
+        Promise.all([BuffetService.showBuffets(), BuffetService.showSignatures(), BuffetService.totalProposal(), BuffetService.totalUsers()]).then((result) => {
+        setViewPayments(result[1])
+      })
+      }
+    }, [])
+
     const handlePageChange = (pageNumber) => {
       setCurrentPage(pageNumber);
-  
     };
 
     function calcularDataExpiracao(dataString) {
@@ -61,6 +71,37 @@ const Signatures = () =>{
     
       return `${dia}/${mes}/${ano}`;
     }
+
+    const extrairValorAposHifen = (nome) => {
+      const partes = nome.split('-');
+      
+      if (partes.length >= 2) {
+        const valorAposHifen = partes[1].trim();
+        return valorAposHifen;
+      }
+    }
+  
+    const formatarValor = (valor) => {
+      const valorString = valor.toString();
+      const reais = valorString.slice(0, -2) || '0';
+      const centavos = valorString.slice(-2);
+      const valorFormatado = `R$ ${reais},${centavos}`;
+      return valorFormatado;
+    };
+      
+        
+
+    useEffect(()=>{
+      PagBankService.getSignaturesPagBankById(viewPayments.map(item=>{
+        item
+      }))
+      .then(res=>{
+        setAssinaturasPagBank(res?.subscriptions);
+      })
+    }, [])
+
+    console.log(assinaturasPagBank)
+
     
   
     
@@ -86,7 +127,7 @@ const Signatures = () =>{
 
         <Box tag="table">
           <TableHead>
-            <TableRow styleSheet={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TableRow>
               <TableCell><p>ID</p> <FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell><p>Data Início</p> <FilterArrows functionupArrow={orderByDateGrowing} functionDownArrow={orderByDateDescending} property="updated_at"/></TableCell>
               <TableCell><p>Data Fim</p> <FilterArrows functionupArrow={orderByDateGrowing} functionDownArrow={orderByDateDescending} property="updated_at"/></TableCell>
@@ -98,41 +139,23 @@ const Signatures = () =>{
           </TableHead>
 
           <TableBody>
-            {signatures?.slice((currentPage - 1) * elementsPerPage, currentPage * elementsPerPage)
+            {assinaturasPagBank?.slice((currentPage - 1) * elementsPerPage, currentPage * elementsPerPage)
           ?.map((item, index)=>(
-              <TableRow key={index} styleSheet={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <TableCell>{item?.['id']}</TableCell>
-                <TableCell>{new Date(item?.['updated_at']).toLocaleDateString()}</TableCell>
-                <TableCell>{calcularDataExpiracao(item?.['updated_at'])}</TableCell>
-                <TableCell>{item?.['entidade']['nome']}</TableCell>
-                <TableCell>R$ {item?.['valor']}</TableCell>
-                <TableCell>R$ {item?.['desconto']}</TableCell>
+              <TableRow key={index}>
+                 <TableCell>{index}</TableCell>
+                <TableCell >{new Date(item?.trial?.start_at).toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(item?.trial?.end_at).toLocaleDateString()}</TableCell>
+                <TableCell>{item?.customer?.name != ''? extrairValorAposHifen(item?.customer?.name): "Não Preenchido"}</TableCell>
+                <TableCell>{formatarValor(item?.amount?.value)}</TableCell>
+                <TableCell>{0}</TableCell>
 
-                {item.status == "Nova assinatura" && (
+                {item?.status === 'TRIAL' && (
                   <Box tag="td"
                   styleSheet={{
                     padding: '.7rem',
                     borderRadius: '10px',
-                    backgroundColor: theme.colors.secondary.x1600
-                  }}    
-                >
-                  <Text styleSheet={{
-                      color: theme.colors.secondary.x800,
-                      textAlign: 'center'
-                    }}
-                  >
-                    {item?.['status']}
-                  </Text>
-                </Box>
-                )}
-
-
-                {item.status === 'TRIAL' && (
-                  <Box tag="td"
-                  styleSheet={{
-                    padding: '.7rem',
-                    borderRadius: '10px',
-                    backgroundColor: theme.colors.positive.x050
+                    backgroundColor: theme.colors.positive.x050,
+                    width: '100%'
                   }}    
                 >
                   <Text styleSheet={{
@@ -140,12 +163,55 @@ const Signatures = () =>{
                       textAlign: 'center'
                     }}
                   >
-                    Ativo/Trial
+                    Ativo/Gratuito
                   </Text>
-                 
+                
                 </Box>
                 )}
-                {(item.status === "PENDENTE" || item.status == null) && (
+
+                {item.status === 'OVERDUE'  && (
+                  <Box tag="td"
+                  styleSheet={{
+                    padding: '.7rem',
+                    borderRadius: '10px',
+                    backgroundColor: theme.colors.secondary.x1100,
+                    color: theme.colors.secondary.x700
+                  }}    
+                >
+                  <Text styleSheet={{
+                       color: theme.colors.secondary.x700,
+                      textAlign: 'Pagamento recusado'
+                    }}
+                  >
+                    Pendente
+                  </Text>
+                
+                </Box>
+                )}
+
+            {item.status === 'CANCELED'  && (
+                  <Box tag="td"
+                  styleSheet={{
+                    padding: '.7rem',
+                    borderRadius: '10px',
+                    backgroundColor: theme.colors.negative.x400,
+                   
+                  }}    
+                >
+                  <Text styleSheet={{
+                      color: theme.colors.neutral.x000,
+                      textAlign: 'center'
+                    }}
+                  >
+                    Cancelado
+                  </Text>
+                
+                </Box>
+                )}
+
+
+
+                {(item.status === "Avaliação" || item.status == null) && (
                   <Box tag="td"
                   styleSheet={{
                     padding: '.7rem',
@@ -158,27 +224,7 @@ const Signatures = () =>{
                       textAlign: 'center'
                     }}
                   >
-                    Pendente
-                  </Text>
-                 
-                </Box>
-                )}
-
-              {item.status === 'CANCELED'  && (
-                  <Box tag="td"
-                  styleSheet={{
-                    padding: '.7rem',
-                    borderRadius: '10px',
-                    backgroundColor: theme.colors.secondary.x1100,
-                    color: theme.colors.secondary.x700
-                  }}    
-                >
-                  <Text styleSheet={{
-                       color: theme.colors.secondary.x700,
-                      textAlign: 'center'
-                    }}
-                  >
-                    Cancelada
+                    {item?.['status'] ?? 'NULL'}
                   </Text>
                 
                 </Box>
@@ -189,7 +235,7 @@ const Signatures = () =>{
           </TableBody>
         </Box>
       </Box>
-      <Pagination currentPage={currentPage} qtdElements={signatures.length} elementsPerPage={elementsPerPage} onPageChange={handlePageChange}/>
+      <Pagination currentPage={currentPage} qtdElements={assinaturasPagBank?.length} elementsPerPage={elementsPerPage} onPageChange={handlePageChange}/>
     </Box>
   )
 }

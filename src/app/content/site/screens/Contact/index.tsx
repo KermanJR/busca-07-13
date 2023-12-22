@@ -74,9 +74,10 @@ export default function Contact(){
               textAlign: 'center',
               justifyContent: 'center',
               alignContent: 'center',
+              padding: `${isMobile ? (!(size < 350) ? '5rem' : '3rem'): '6rem'}`,
+              marginTop: `${isMobile ? (!(size < 350) ? '4rem' : '3rem'): '5rem'}`,
               background: `url(${BannerAnotherPages.src})`,
-              padding: `${isMobile ? '5rem': '6rem'}`,
-              marginTop: '5rem'
+             
           }}>
               <Text 
               tag="h1" 

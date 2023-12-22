@@ -5,7 +5,7 @@ import Text from "@src/app/theme/components/Text/Text";
 import Icon from "@src/app/theme/components/Icon/Icon";
 import useResponsive from "@src/app/theme/helpers/useResponsive";
 import BannerAnotherPages from '../../../../../../public/assets/images/banner_another_pages.webp';
-
+import BackModal from '../../../../../../public/assets/images/fundo-login.jpg';
 import Input from "@src/app/theme/components/Input/Input";
 import { ModalContext } from "@src/app/context/ModalContext";
 import ModalRegister from "../HomeScreen/Components/Modals/RegisterModal";
@@ -27,6 +27,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ModalRecoveryPassword from "../HomeScreen/Components/Modals/RecoveryPassword";
 import WhatsAppButton from "../HomeScreen/Components/WhatsappButton";
 import CategoryFilter from "./CategoryFilter";
+import SelectWithClickToAddCategory from "@src/app/components/system/SelectCategories";
+import SelectCategoriesRegion from "@src/app/components/system/SelectCategoriesRegion";
 export default function BudgetByRegion(){
 
   
@@ -70,6 +72,7 @@ export default function BudgetByRegion(){
     const [states, setStates] = useState([]);
     const [neighbourhood, setNeighbourhood] = useState([]);
     const [selectedStateId, setSelectedStateId] = useState(null);
+    const [auxCategoriesBuffets, setAuxCategoriesBuffet] = useState([]);
 
     const [idUser, setIdUser] = useState('');
 
@@ -108,6 +111,8 @@ export default function BudgetByRegion(){
     
     
       const [selectedCategories, setSelectedCategories] = useState<any>([]);
+
+
       const handleCategoryChange = (categoryValue) => {
         if (selectedCategories.includes(categoryValue)) {
           setSelectedCategories(selectedCategories.filter((c) => c !== categoryValue));
@@ -115,6 +120,10 @@ export default function BudgetByRegion(){
           setSelectedCategories([...selectedCategories, categoryValue]);
         }
       };
+
+
+    
+
    
   
     const handleStateChange = async (selectedOption?) => {
@@ -162,8 +171,12 @@ export default function BudgetByRegion(){
           <Box styleSheet={{
             backgroundColor: 'white',
             borderRadius: '8px',
-            height: '300px',
-            width: '50%'
+            height: '350px',
+            width: '50%',
+        
+            padding: '1rem 0',
+            background: `URL(${BackModal.src})`,
+            backgroundPositionY: '-15rem'
           }}>
 
        
@@ -183,18 +196,21 @@ export default function BudgetByRegion(){
             marginBottom: '1rem',
             position: 'relative',
             alignSelf: 'end',
-            marginTop: '1rem',
+            marginTop: '0.3rem',
             marginRight: '1rem',
-            boxShadow: '0.5px 1px 3px 1px #969BA0'
+          
           }}
         >
           X
       </Button>
-        
-         <Text variant="heading5" color="green" styleSheet={{display:' flex', flexDirection: 'row', height: '60%',justifyContent: 'center', alignItems: 'center', marginTop: '-1rem'}}>
-           {dataUser['entidade']?.nome}, orçamento enviado com sucesso!
+        <Box styleSheet={{backgroundColor: 'white', width: '70%', margin: '0rem auto', padding: '2rem', borderRadius: '5px', textAlign: 'center'}}>
+        <Text variant="heading5"  styleSheet={{fontWeight: '500',fontSize: '1rem', color: theme.colors.primary,display:' flex', flexDirection: 'row', height: 'auto',justifyContent: 'center', alignItems: 'center', marginTop: '-1rem'}}>
+          Prezado {dataUser['entidade']?.nome}, a sua busca por Buffets foi concluída com sucesso.
+          O seu pedido de orçamento foi enviado com êxito aos buffets disponíveis na região.
          </Text>
-         <Image src={Correct.src} alt="" styleSheet={{width: '70px', textAlign: 'center', alignSelf: 'center', marginTop: '-2rem'}}/>
+         <Image src={Correct.src} alt="" styleSheet={{width: '70px', textAlign: 'center', alignSelf: 'center', marginTop: '.5rem'}}/>
+        </Box>
+         
         </Box>
       </Box>
       );
@@ -320,7 +336,7 @@ export default function BudgetByRegion(){
 
     
 
-    console.log(idBuffet)
+ 
 
    
 
@@ -510,15 +526,16 @@ export default function BudgetByRegion(){
 
           {/*Banner Principal*/}      
           <Box styleSheet={{
-              width: '100%',
-              height: '281px',
-              display: 'flex',
-              textAlign: 'center',
-              justifyContent: 'center',
-              alignContent: 'center',
-              background: `url(${BannerAnotherPages.src})`,
-              padding: `${isMobile ? '5rem': '6rem'}`,
-              marginTop: '5rem'
+             width: '100%',
+             height: '281px',
+             display: 'flex',
+             textAlign: 'center',
+             justifyContent: 'center',
+             alignContent: 'center',
+             padding: `${isMobile ? (!(size < 350) ? '5rem' : '3rem'): '6rem'}`,
+             marginTop: `${isMobile ? (!(size < 350) ? '4rem' : '3rem'): '5rem'}`,
+             background: `url(${BannerAnotherPages.src})`,
+              
           }}>
               <Text 
                 tag="h1" 
@@ -550,7 +567,7 @@ export default function BudgetByRegion(){
                   required={true}
                   onChange={(e)=>setNome(e)}
                     type="text" placeholder="Nome do evento" styleSheet={{padding: '.5rem', borderRadius: '5px', backgroundColor: theme.colors.neutral.x050}}/>
-                  <InputDash type="number" onChange={(e)=>setQtdPessoas(e)} placeholder="Quantidade de pessoas" styleSheet={{padding: '.5rem',  borderRadius: '5px', backgroundColor: theme.colors.neutral.x050}}/>
+                  <InputDash type="number" onChange={(e)=>setQtdPessoas(e)} placeholder="Quantidade de pessoas" styleSheet={{padding: '.5rem',  borderRadius: '5px', backgroundColor: theme.colors.neutral.x050}} required={true}/>
                 </Box>
                 <Box styleSheet={{
                   display: 'grid',
@@ -581,11 +598,15 @@ export default function BudgetByRegion(){
                   gap: '1rem',
                   paddingTop: '1rem'
                 }}>
-                  <CategoryFilter 
-                    categories1={categories1}
-                    categories2={categories2} 
-                    onCategoryChange={handleCategoryChange} 
-                    selectedCategories={selectedCategories}/>
+                  
+
+                  <SelectCategoriesRegion 
+                    options={[...categories1, ...categories2]} 
+                    selectedCategories={selectedCategories}
+                    setAuxCategoryBuffets={setAuxCategoriesBuffet}
+                    //onCategoryChange={handleCategoryChange} 
+                    setSelectedCategories={setSelectedCategories}
+                  />
                   
                   <Select
                     onChange={handleStateChange}
@@ -769,12 +790,16 @@ export default function BudgetByRegion(){
               gap: '1rem',
               paddingTop: '1rem'
             }}>
-              <CategoryFilter 
-                categories1={categories1}
-                categories2={categories2} 
-                onCategoryChange={handleCategoryChange} 
-                selectedCategories={selectedCategories}
-              />
+              
+
+                <SelectCategoriesRegion 
+                    options={[...categories1, ...categories2]} 
+                    selectedCategories={selectedCategories}
+                    setAuxCategoryBuffets={setAuxCategoriesBuffet}
+                    //onCategoryChange={handleCategoryChange} 
+                    setSelectedCategories={setSelectedCategories}
+                  />
+                  
 
               <InputDash 
                 disabled={true} 

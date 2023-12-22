@@ -67,6 +67,8 @@ const Homedash = () =>{
     })
   }, [dataUser != null || dataUser != undefined])
 
+  console.log(propostas)
+
   return(
     <Box styleSheet={{height: '100vh'}} tag="div">
       <BoxDash styleSheet={{flexDirection: 'row', justifyContent: 'left', gap: '2rem', width: '33%'}}>
@@ -110,11 +112,10 @@ const Homedash = () =>{
 
         <Box tag="table">
           <TableHead>
-            <TableRow styleSheet={{display: 'flex', flexDirection: 'row', gap: '0'}}>
+            <TableRow>
               <TableCell>ID Proposta<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell>Nome do Buffet<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell>Data Disponibilidade<FilterArrows functionupArrow={orderByDateGrowing} functionDownArrow={orderByDateDescending} property="id"/></TableCell>
-              <TableCell>QTD. pessoas<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell>Valor<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell>Observações<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell>Arquivo<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
@@ -124,11 +125,10 @@ const Homedash = () =>{
           <TableBody>
             {propostas?.slice((currentPage - 1) * elementsPerPage, currentPage * elementsPerPage)
           ?.map((item, index)=>(
-              <TableRow key={index} styleSheet={{display: 'flex', flexDirection: 'row', flexWrap: 'no-wrap'}}>
+              <TableRow >
                 <TableCell>{item?.['id']}</TableCell>
                 <TableCell>{item?.entidade?.['nome']}</TableCell>
                 <TableCell>{converterData(item?.['data_do_evento'])}</TableCell>
-                <TableCell>{item?.evento?.['qtd_pessoas']}</TableCell>
                 <TableCell>{(item?.['valor']).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</TableCell>
                 <TableCell styleSheet={{textAlign: 'left', color: 'black', width: '15%'}}>{item?.['observacoes']}</TableCell>
                 <TableCell styleSheet={{display: 'flex', justifyContent: 'center', alignItems: 'left'}}>

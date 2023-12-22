@@ -301,14 +301,15 @@ useEffect(() => {
     setFilter('')
   }
 
+  console.log(filter)
+
 
 
   const typesOfParty1 = ['Aniversário', 'Bar e Bat Mitzvah', 'Bodas', 'Casamento', 'Debutante', 
-    'Domicílio', 'Festa Infantil', 'Formatura'
+    'Domicílio', 'Evento Corporativo', 'Festa Infantil', 'Formatura'
   ];
 
-  const typesOfParty2 = ['Almoço/Jantar empresárial', 'Confraternização', 'Palestra', 'Treinamento', 'Workshop'
-  ];
+
   const states = ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Mato Grosso do Sul'];
 
   const renderCheckBoxes = (items, filterName) => items.map((item, index) => (
@@ -387,7 +388,7 @@ useEffect(() => {
           borderRadius: '1.25rem',
           marginTop: '2rem',
           gridArea: !(size <= 650) ? '' : 'map',
-         
+          
         }}>
         
         <ModalMaps isOpen={isMapModalOpen} onRequestClose={closeMapModal} coordinates={coordinates}/>
@@ -414,36 +415,56 @@ useEffect(() => {
       }
       
 
-      <Box styleSheet={{backgroundColor: theme.colors.neutral.x050, padding: !(size < 350) ? '1rem' : '5px', borderRadius: '6px', marginTop: '3rem', gridArea: !(size <= 650) ? '' : 'filter1', overflowY: 'hidden',overflowX: 'hidden', height: 'auto'}}>
+    
+      <Box styleSheet={{backgroundColor: theme.colors.neutral.x050, padding: !(size < 350) ? '1rem' : '5px', borderRadius: '6px', marginTop: !(size < 350) ? '3rem' : '3rem', gridArea: !(size <= 650) ? '' : 'filter1', overflowY: 'hidden',overflowX: 'hidden', height: 'auto'}}>
         <Text variant='heading5semiBold' styleSheet={!(size <= 650) ? {} : {fontSize: (!(size < 350) ? '0.9rem' : '0.7rem')}}>Tipos de Festa</Text>
-        <Text styleSheet={!(size <= 650) ? {} : {fontSize: (!(size < 350) ? '0.9rem' : '0.7rem')}}><Text styleSheet={{marginTop: '1rem'}}>Eventos Sociais</Text></Text>
           {renderCheckBoxes(typesOfParty1, 'filterParty')}
-          <Text styleSheet={!(size <= 650) ? {} : {fontSize: (!(size < 350) ? '0.9rem' : '0.7rem')}}><Text styleSheet={{marginTop: '1rem'}}>Eventos Corporativos</Text></Text>
-          {renderCheckBoxes(typesOfParty2, 'filterParty')}
-      
       </Box>
      
 
-      <Box styleSheet={{backgroundColor: theme.colors.neutral.x050, padding: !(size < 350) ? '1rem' : '5px', borderRadius: '6px', marginTop: '1rem', gridArea: !(size <= 650) ? '' : 'filter2'}}>
+      <Box styleSheet={{backgroundColor: theme.colors.neutral.x050, padding: !(size < 350) ? '1rem' : '5px', borderRadius: '6px', marginTop: !(size < 350) ? '3rem' : '3rem', gridArea: !(size <= 650) ? '' : 'filter2'}}>
           <Text variant='heading5semiBold' styleSheet={!(size <= 650) ? {} : {fontSize: (!(size < 350) ? '0.9rem' : '0.7rem')}}>Por Estado</Text>
           {renderCheckBoxes(states, 'filterState')}
-          
       </Box>
-      <Button 
+
+      
+
+      {
+        !(size < 1080) ? 
+        <Button 
         onClick={clearFilters} 
+        fullWidth={true}
         styleSheet={{
           width: '100%',
           alignSelf: 'center',
           position: 'relative',
-          top: !(size < 400) ? '' : '2.2rem',
+          top: !(size < 400) ? '1rem' : '1rem',
           borderRadius: '6px',
-          marginTop: '.5rem'
+     
         }}
         variant='outlined'
-        textVariant='body1'
+        
       >
         Nova Pesquisa
-      </Button>
+      </Button> : 
+        <Button 
+        onClick={clearFilters} 
+        fullWidth={true}
+        styleSheet={{
+          width: '205%',
+          alignSelf: 'center',
+          position: 'relative',
+          top: !(size < 400) ? '1rem' : '1rem',
+          borderRadius: '6px',
+     
+        }}
+        variant='outlined'
+        
+      >
+        Nova Pesquisa
+      </Button> 
+      }
+      
     </Box>
   );
 }

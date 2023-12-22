@@ -236,6 +236,9 @@ const Homedash = () =>{
   }
 
 
+  console.log(currentPropostas)
+
+
   return(
     <Box styleSheet={{height: 'auto'}}>
       <Box styleSheet={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: '2rem'}}>
@@ -396,7 +399,7 @@ const Homedash = () =>{
 
         <Box tag="table">
           <TableHead>
-            <TableRow styleSheet={{display: 'flex', flexDirection: 'row'}}>
+            <TableRow >
               <TableCell>ID Proposta<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell>Data<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="update_at"/></TableCell>
               <TableCell>Nome do Evento<FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="entidade.nome"/></TableCell>
@@ -413,7 +416,7 @@ const Homedash = () =>{
             {currentPropostas?.slice((currentPage - 1) * elementsPerPage, currentPage * elementsPerPage)
           ?.map((item, index)=>(
               <Link href={`buffet/`} key={index} onClick={(e)=>handleBuffetClick(item?.id)}>
-              <TableRow key={index} styleSheet={{display: 'flex', flexDirection: 'row'}}>
+              <TableRow>
                 <TableCell >{item?.['id']}</TableCell>
                 <TableCell>{converterData(item?.['data_do_evento'])}</TableCell>
                 <TableCell>{item?.['nome']}</TableCell>

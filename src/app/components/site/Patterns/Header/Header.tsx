@@ -147,12 +147,10 @@ export default function Header(){
           marginRight: (size < 1200) ? '' : '0rem'
         }}
       >
-        {dataUser?.['entidade']?.nome == null &&
-           <button onClick={() => router.push('/login')} style={{color: 'black', paddingRight: '1rem', textDecoration: 'underline'}}><Text>Acesse o buffet</Text></button>
-        }
+     
         {dataUser?.['entidade']?.nome == null &&
   
-        <Button variant="contained" colorVariant="secondary" size="lg" onClick={() => router.push('/login')}>Anuncie seu Buffet</Button>
+        <Button variant="contained" colorVariant="secondary" size="lg" onClick={() => router.push('/login')}>Empresas/Anuncie</Button>
         }
 
 
@@ -206,7 +204,7 @@ export default function Header(){
       boxShadow: `0px 2px 8px ${theme.colors.neutral.x200}`
     }}
   >
-    <Image src={Logo.src} alt="logo" styleSheet={{width: '70px', height: '40px', objectFit: 'cover'}}/>
+    <Image src={Logo.src} alt="logo" styleSheet={{width: '70px', height: '40px', objectFit: 'cover'}} onClick={(e)=>router.push('/')}/>
     <Icon name="menuHamburguer" fill={theme.colors.secondary.x500} onClick={toggleSideMenu}/>
     {isSideMenuOpen &&
         <Box styleSheet={{
@@ -233,10 +231,12 @@ export default function Header(){
             gap: '1rem',
             padding: '1rem'
           }}>
-            <Link href="/Home">Home</Link>
+            <Link href="/">Home</Link>
             <Link href="/busca">Buffets</Link>
             <Link href="/orcamento-por-regiao">Orçamento por Região</Link>
             <Link href="/contato">Contato</Link>
+            <Button onClick={openBudgetModal} variant="outlined" colorVariant='secondary'>Login</Button>
+            <Button variant="contained" colorVariant='secondary' onClick={(e)=>router.push('/login')}>Empresas/Anuncie</Button>
           </Box>
         </Box>
       }

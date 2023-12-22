@@ -91,31 +91,7 @@ const Homedash = () =>{
     setCurrentPage(pageNumber);
   };
   
-  /*function calcularDataExpiracao(dataString) {
-    // Verifica se a dataString é fornecida
-    if (!dataString) {
-      return 'Data inválida';
-    }
-  
-    // Converte a string para um objeto Date
-    const dataOriginal = new Date(dataString);
-  
-    // Verifica se a conversão foi bem-sucedida
-    if (isNaN(dataOriginal.getTime())) {
-      return 'Data inválida';
-    }
-  
-    // Adiciona 90 dias à data original
-    const dataExpiracao = new Date(dataOriginal);
-    dataExpiracao.setDate(dataOriginal.getDate() + 90);
-  
-    // Formata a nova data para o formato DD/MM/AAAA
-    const dia = String(dataExpiracao.getDate()).padStart(2, '0');
-    const mes = String(dataExpiracao.getMonth() + 1).padStart(2, '0');
-    const ano = dataExpiracao.getFullYear();
-  
-    return `${dia}/${mes}/${ano}`;
-  }*/
+ 
 
   const extrairValorAposHifen = (nome) => {
     const partes = nome.split('-');
@@ -145,7 +121,6 @@ const Homedash = () =>{
       setAssinaturasPagBank(res?.subscriptions);
     })
   }, [])
-  
 
 
 
@@ -266,7 +241,7 @@ const Homedash = () =>{
 
         <Box tag="table">
         <TableHead >
-            {loading && <TableRow styleSheet={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            {loading && <TableRow>
               <TableCell><p>ID</p> <FilterArrows functionupArrow={orderByGrowing} functionDownArrow={orderByDescending} property="id"/></TableCell>
               <TableCell><p>Data Início</p> <FilterArrows functionupArrow={orderByDateGrowing} functionDownArrow={orderByDateDescending} property="updated_at"/></TableCell>
               <TableCell><p>Data Fim</p> <FilterArrows functionupArrow={orderByDateGrowing} functionDownArrow={orderByDateDescending} property="updated_at"/></TableCell>
@@ -280,7 +255,7 @@ const Homedash = () =>{
           <TableBody>
             {assinaturasPagBank?.slice((currentPage - 1) * elementsPerPage, currentPage * elementsPerPage)
           ?.map((item, index)=>(
-              <TableRow key={index} styleSheet={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 'none'}}>
+              <TableRow key={index} styleSheet={{}}>
                 <TableCell>{index}</TableCell>
                 <TableCell >{new Date(item?.trial?.start_at).toLocaleDateString()}</TableCell>
                 <TableCell>{new Date(item?.trial?.end_at).toLocaleDateString()}</TableCell>
@@ -294,7 +269,7 @@ const Homedash = () =>{
                     padding: '.7rem',
                     borderRadius: '10px',
                     backgroundColor: theme.colors.positive.x050,
-                    width: '10.6%'
+                    width: '100%'
                   }}    
                 >
                   <Text styleSheet={{
@@ -302,7 +277,7 @@ const Homedash = () =>{
                       textAlign: 'center'
                     }}
                   >
-                    Ativo/Trial
+                    Ativo/Gratuito
                   </Text>
                 
                 </Box>
@@ -374,7 +349,7 @@ const Homedash = () =>{
           </TableBody>
         </Box>
       </Box>
-      <Pagination currentPage={currentPage} qtdElements={assinaturasPagBank.length} elementsPerPage={elementsPerPage} onPageChange={handlePageChange}/>
+      <Pagination currentPage={currentPage} qtdElements={assinaturasPagBank?.length} elementsPerPage={elementsPerPage} onPageChange={handlePageChange}/>
     </Box>
   )
 }

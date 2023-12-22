@@ -130,7 +130,7 @@ useEffect(() => {
 
         <Box styleSheet={{display: 'grid', gridTemplateColumns: '4fr 1fr 1fr 1fr', gap: '1rem'}}>
           <Box>
-            <Text>Nome do cliente</Text>
+            <Text>Nome do evento</Text>
             <InputDash 
               type="text" 
               placeholder="Nome do cliente"
@@ -160,10 +160,10 @@ useEffect(() => {
          
                {Array.isArray(dataEvent[0]?.['tipo']) && dataEvent[0]?.['tipo']?.length > 1 ? 
                     dataEvent[0]?.['tipo']?.map((item1, index)=>{
-                      return <textarea>{item1}</textarea>
+                      return <textarea style={{border: '1px solid red'}}>{item1}</textarea>
                     })
                     : 
-                    <InputDash styleSheet={{width: '100px'}} value={dataEvent[0]?.['tipo']}/>
+                    <InputDash  value={dataEvent[0]?.['tipo']}/>
                   }
             
  

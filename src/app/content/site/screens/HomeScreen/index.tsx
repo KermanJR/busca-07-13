@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 import ModalRecoveryPassword from "./Components/Modals/RecoveryPassword";
 import WhatsAppButton from "./Components/WhatsappButton";
 import { UserContext } from "@src/app/context/UserContext";
+import { MdOutlineLocationOn } from "react-icons/md";
 
 export default function HomeScreen(){
 
@@ -211,7 +212,7 @@ export default function HomeScreen(){
             borderRadius: '1.25rem',
             padding: '1rem',
           }}>
-            <BiMap  style={{color: theme.colors.secondary.x500, fontSize: '30px'}}/>
+            <MdOutlineLocationOn  style={{color: theme.colors.secondary.x500, fontSize: '40px', height: '40px'}}/>
             <Text styleSheet={{fontSize: '1rem', fontWeight: 'bold'}}>Encontre o espaço ideal</Text>
             <Text styleSheet={{fontSize: '.875rem', fontWeight: '500'}}>Encontre o local ideal para o seu evento em poucos cliques</Text>
           </Box>
@@ -231,7 +232,7 @@ export default function HomeScreen(){
             padding: '1rem',
             flexShrink: '0'
           }}>
-            <MdLocalAtm style={{color: theme.colors.secondary.x500, fontSize: '30px'}}></MdLocalAtm>
+            <MdLocalAtm style={{color: theme.colors.secondary.x500, fontSize: '30px'}} viewBox="0 0 29 29"></MdLocalAtm>
             <Text styleSheet={{fontSize: '1rem', fontWeight: 'bold'}}>Solicite o orçamento</Text>
             <Text styleSheet={{fontSize: '.875rem', fontWeight: '500'}}>Encontre o local ideal para o seu evento em poucos cliques</Text>
           </Box>

@@ -27,7 +27,7 @@ export default function FormSearch(){
       label: 'Casamento'
     },
     {
-      value: '5',
+      value: '4',
       label: 'Debutante'
     },
     {
@@ -42,31 +42,12 @@ export default function FormSearch(){
       value: '7',
       label: 'Formatura'
     },
-  ]
-
-  const categories2 = [
-    {
-      value: '10',
-      label: 'Almoço/Jantar empresarial'
-    },
-    {
-      value: '4',
-      label: 'Confraternização'
-    },
-    {
-      value: '11',
-      label: 'Palestra'
-    },
     {
       value: '12',
-      label: 'Treinamento'
+      label: 'Evento Corporativo'
     },
-    {
-      value: '13',
-      label: 'Workshop'
-    },
-
   ]
+
 
   const [categoria, setCategoria] = useState('');
   const [cidade, setCidade] = useState('');
@@ -139,7 +120,7 @@ useEffect(() => {
     }}>
       <CategoryFilter
         categories1={categories1}
-        categories2={categories2}
+
         selectedCategories={selectedCategories}
         onCategoryChange={handleCategoryChange}
       />
